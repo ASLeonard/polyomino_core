@@ -1,5 +1,7 @@
 # Polyomino self-assembly core repository
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8eae273ab3f34d77b3be158a33613ce6)](https://app.codacy.com/app/ASLeonard/polyomino_core?utm_source=github.com&utm_medium=referral&utm_content=ASLeonard/polyomino_core&utm_campaign=Badge_Grade_Dashboard)
+
 Base for polyomino model development
 
 ## Getting Started
