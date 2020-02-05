@@ -4,9 +4,12 @@ from itertools import product
 import numpy as np
 from scipy.interpolate import splprep,splev
 
+def prepString(shape_str):
+    return [int(i) for i in shape_str.split()][2:]
+
 def VisualiseSingleShape(shape,ax=None,corner=(0,1),extent=1,add_direction=False):
-    cols=['darkgreen','royalblue','firebrick','goldenrod','mediumorchid']
-    hatchs=['//','.','\\\\','O']
+    cols=['darkgreen','royalblue','firebrick','goldenrod','mediumorchid']*10
+    hatchs=['//','.','\\\\','O']*20
     ar_offsets={0:(0,-.25,0,.25),1:(-.25,0,.25,0),2:(0,.25,0,-.25),3:(.25,0,-.25,0)}
     rescale=False
     if ax is None:
@@ -14,7 +17,7 @@ def VisualiseSingleShape(shape,ax=None,corner=(0,1),extent=1,add_direction=False
         plt.figure()
         ax = plt.gca()
 
-    dx,dy=shape
+    dx,dy=shape[:2]
     max_d=max(dx,dy)
     extentS=extent/max_d
     for i,j in product(range(dx),range(dy)):

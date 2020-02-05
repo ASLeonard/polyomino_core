@@ -200,11 +200,28 @@ inline Phenotype GetPhenotypeFromGrid(std::vector<int8_t>& placed_tiles) {
 struct PhenotypeTable {
 
   //if fixed, the table will not add new phenotypes to the table
-  bool FIXED_TABLE=false;
+  bool FIXED_TABLE = false;
 
   //parameters controlling how many repeated builds are assembled, and the fraction of assembles required to be considered deterministic
-  inline static double UND_threshold=0;
-  inline static uint16_t phenotype_builds=10;
+  double UND_threshold;
+  uint16_t phenotype_builds;
+
+  PhenotypeTable() {
+    UND_threshold = 1;
+    phenotype_builds = 10;
+  }
+  PhenotypeTable(uint16_t B) {
+    UND_threshold = 1;
+    phenotype_builds = B;
+  }
+  PhenotypeTable(double T) {
+    UND_threshold = T;
+    phenotype_builds = 10;
+  }
+  PhenotypeTable(uint16_t B, double T) {
+    UND_threshold = T;
+    phenotype_builds = B;
+  }
 
   //map with keys given by size and vectors holding the phenotype. The pid can be found as the (map key,index of phenotype in that vector)
   //temporary maps also need to track the count, to later see if common enough to add to table
