@@ -14,8 +14,7 @@ def VisualiseSingleShape(shape,ax=None,corner=(0,1),extent=1,add_direction=False
     rescale=False
     if ax is None:
         rescale=True
-        plt.figure()
-        ax = plt.gca()
+        _, ax = plt.subplots()
 
     dx,dy=shape[:2]
     max_d=max(dx,dy)
@@ -31,6 +30,7 @@ def VisualiseSingleShape(shape,ax=None,corner=(0,1),extent=1,add_direction=False
                 ax.arrow(coords[0]+extentS/2, coords[1]+extentS/2, ar_offsets[theta][2]*extentS, ar_offsets[theta][3]*extentS, head_width=0.01*extent, head_length=0.025*extent, fc='k', ec='k',transform=ax.transAxes)
 
     if rescale:
+        ax.text(-0.05, 0.95,f'Size: {sum(i != 0 for i in shape[2:])}\ndX: {dx}\ndY: {dy}',ha='right', va='top',transform = ax.transAxes,fontsize=18)
         #maxB=max(dx,dy)
         #ax.set_xlim([-maxB/2-0.5,maxB/2+0.5])
         #ax.set_ylim([-maxB/2-0.5,maxB/2+0.5])
