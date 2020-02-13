@@ -25,7 +25,6 @@ constexpr Phenotype_ID NULL_pid{0,0}, UNBOUND_pid{255,0};
 
 
 struct Phenotype {
-  
   //instance variables
   uint8_t dx,dy;
   std::vector<uint8_t> tiling;
@@ -41,7 +40,6 @@ struct Phenotype {
   //utility methods
   bool operator==(const Phenotype& rhs) {return this->dx==rhs.dx && this->dy==rhs.dy && this->tiling==rhs.tiling;}
   inline friend std::ostream& operator<<(std::ostream& out, Phenotype& phen);
-    
 };
 
 //phenotype printing method
@@ -70,7 +68,6 @@ inline void ClockwiseRotation(Phenotype& phen) {
 
 //reflects polyomino over axis, and reflects tile orientation if required
 inline void ChiralFlip(Phenotype& phen) {
-  
   //reverse each row to reflect polyomino
   for(auto iter=phen.tiling.begin();iter!=phen.tiling.end();iter+=phen.dx)
     std::reverse(iter,iter+phen.dx);
@@ -84,7 +81,6 @@ inline void ChiralFlip(Phenotype& phen) {
 
 //relabel the polyomino representation to be minimal
 inline void MinimizePhenRep(std::vector<uint8_t>& tiling) {
-
   //if single tile or only shape-dependent, relabel all as 1s
   if(tiling.size() == 1 || Phenotype::DETERMINISM_LEVEL == 1) {
     for(uint8_t& t : tiling)
@@ -228,11 +224,10 @@ struct PhenotypeTable {
 protected:
   std::unordered_map<uint8_t,std::vector<Phenotype>> undiscovered_phenotypes;
   std::unordered_map<uint8_t, std::vector<uint16_t>> undiscovered_phenotype_counts;
+
 public:
   std::unordered_map<uint8_t,std::vector<Phenotype> > known_phenotypes;
-  
 
-  
   inline Phenotype_ID GetPhenotypeID(Phenotype& phen) {
     
     //get phenotype size
@@ -305,10 +300,7 @@ public:
     }
     if(clear)
       ClearIncomplete();
-
-
   }
-
   
   //find the frequency of each phenotype in a vector of pids, stripping pids that were below a threshold and adding a rare pid
   inline std::map<Phenotype_ID,uint16_t> PhenotypeFrequencies(std::vector<Phenotype_ID >& pids,const Phenotype_ID RARE_pid=NULL_pid, bool allow_existing=false) { 
@@ -340,10 +332,11 @@ public:
     std::string temp;
     while (std::getline(fin, temp)) {
       std::istringstream buffer(temp);
-      std::vector<uint8_t> vec{std::istream_iterator<double>(buffer), std::istream_iterator<double>()};
+      std::vector<uint16_t> vec{std::istream_iterator<uint16_t>(buffer), std::istream_iterator<uint16_t>()};
       
-      uint8_t phenotype_size=std::count_if(vec.begin()+2,vec.end(),[](const int c){return c != 0;});
-      known_phenotypes[phenotype_size].emplace_back(vec[0],vec[1],std::vector<uint8_t>{vec.begin()+2,vec.end()});
+      //uint8_t phenotype_size=std::count_if(vec.begin()+2,vec.end(),[](const int c){return c != 0;});
+      
+      known_phenotypes[vec[0]].emplace_back(vec[2],vec[3],std::vector<uint8_t>{vec.begin()+4,vec.end()});
     }
   }
 
